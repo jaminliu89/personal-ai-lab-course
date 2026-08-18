@@ -682,7 +682,7 @@ function initImportExport() {
 window.Sync = {
   pushOne(moduleId, taskId, checked) {
     // 如果登录了，推送到云端
-    if (window.Auth && Auth.isLoggedIn()) {
+    if (window.Auth && Auth.isLoggedIn() && Auth.isApiAvailable()) {
       Auth.saveProgress(moduleId, taskId, checked);
     }
   },
@@ -730,6 +730,10 @@ function initAuthUI() {
           updateAuthBtn();
         }
       };
+    } else if (window.Auth && !Auth.isApiAvailable()) {
+      authBtn.textContent = '本地模式';
+      authBtn.title = '云端同步需翻墙';
+      authBtn.onclick = () => alert('云端同步功能需要翻墙才能使用。\n本地学习进度不受影响，保存在你的浏览器里。');
     } else {
       authBtn.textContent = '登录同步';
       authBtn.onclick = () => window.Auth && Auth.showLoginModal();
@@ -742,6 +746,8 @@ function initAuthUI() {
   } else {
     document.addEventListener('auth-ready', updateAuthBtn);
   }
+  // API 检测完成后再更新一次
+  document.addEventListener('auth-api-checked', updateAuthBtn);
 }
 
 // ── 启动 ─────────────────────────────────────────────────

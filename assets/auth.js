@@ -2,7 +2,7 @@
 // 邮箱 OTP 登录 + 进度云端同步
 
 (function(){
-  const API_BASE = '/api';
+  const API_BASE = 'api';
 
   // ── Auth ──────────────────────────────────────────────
   const Auth = {
@@ -16,7 +16,27 @@
       if (userStr) {
         try { this._user = JSON.parse(userStr); } catch(e) {}
       }
+      // 检测 API 是否可用（判断是否在纯静态环境）
+      this._apiAvailable = null;
+      this._checkApi();
       document.dispatchEvent(new Event('auth-ready'));
+    },
+
+    async _checkApi() {
+      try {
+        const res = await fetch(API_BASE + '/auth/me', { method: 'GET', credentials: 'include' });
+        // 只要有响应（哪怕 401）说明 API 存在
+        this._apiAvailable = res.status !== 404;
+      } catch(e) {
+        this._apiAvailable = false;
+      }
+      // 通知 UI 更新
+      document.dispatchEvent(new Event('auth-api-checked'));
+      return this._apiAvailable;
+    },
+
+    isApiAvailable() {
+      return this._apiAvailable !== false; // null = 还在检测，先显示
     },
 
     isLoggedIn() {
@@ -64,6 +84,10 @@
     },
 
     showLoginModal() {
+      if (!this.isApiAvailable()) {
+        alert('云端同步功能需要翻墙才能使用。\n本地学习进度不受影响，保存在你的浏览器里。');
+        return;
+      }
       // 已存在就打开
       let modal = document.getElementById('login-modal');
       if (modal) {

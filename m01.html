@@ -1,4 +1,5 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>零基础 Python：只学训练模型真正会用到的部分 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>零基础 Python：只学训练模型真正会用到的部分 · Personal AI Lab</title>
+  <base href="./"><link rel="stylesheet" href="assets/style.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0b0d10">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,7 +18,8 @@ with open(&quot;data.jsonl&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as 
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(console.error);
+    const base = document.querySelector('base')?.href || './';
+    navigator.serviceWorker.register(base + 'sw.js', { scope: base }).catch(console.error);
   });
 }
 </script>
