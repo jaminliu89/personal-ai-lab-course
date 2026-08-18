@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>先把“大模型训练”这件事看懂 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 00 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>先把“大模型训练”这件事看懂</h1><p class="lead">建立全局地图：知道训练、微调、RAG、Agent、Eval 各自解决什么问题，避免一开始就掉进术语坑。</p><section class="lesson"><h2>0.1 你真正要构建的不是“一个聊天网页”</h2><p>普通人做自己的大模型，最现实的目标不是从零复刻 GPT-5，而是拥有一条可控制的模型工程链路：选择开源 Base Model → 准备自己的数据 → 设计评测集 → SFT/LoRA 微调 → 做偏好训练 → 部署成 API → 用 Agent 把模型嵌进工作流。只要其中的数据、评测标准、训练实验和最终行为由你控制，它就已经是你的模型系统。巨头和个人的区别主要在规模，不在基本原理。</p></section><section class="lesson"><h2>0.2 六个词先分清</h2><p>Inference 是“模型已经训练好，现在拿来回答”；Training 是“通过数据和损失函数更新权重”；Fine-tuning 是在现有模型基础上继续训练；RAG 是不改权重，临时把外部资料塞进上下文；Agent 是让模型有任务状态、工具和循环；Eval 是用固定标准量化模型是否真的变好。你以后每次遇到一个需求，都先问：这是知识缺失、行为风格、执行流程，还是模型基础能力问题？不同问题对应不同技术。</p></section><section class="lesson"><h2>0.3 为什么一次写 30 个文件容易敷衍</h2><p>模型在一次超长输出中既要维持全局一致性，又要不断生成新内容。随着输出变长，它会越来越倾向于压缩、概括、复用模板。正确工程做法是把“30 个文件”拆成 30 个可验收任务，并且给每个文件独立上下文预算。每写完一个文件，Reviewer 根据评分表检查深度、引用、跨文件一致性，低于阈值就返工。这是 Agent Workflow 问题，不是简单换个更大模型就能彻底解决。</p></section><section class="lesson"><h2>0.4 你的学习顺序</h2><p>本课程故意采用“先跑通，再理解，再重做”的顺序。第一阶段先学会运行模型、制作数据和完成 LoRA；第二阶段补 PyTorch、Attention、Loss、Gradient；第三阶段学习 Eval、DPO、持续预训练、部署和多 Agent；最后从零写一个 Mini GPT。你每一阶段都必须留下实验记录，而不是只看文字。</p></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="00-0"><span>创建 personal-ai-lab 文件夹</span></label><label class="check"><input type="checkbox" data-task="00-1"><span>写一份 why.md：我为什么要学模型训练</span></label><label class="check"><input type="checkbox" data-task="00-2"><span>列出你最想训练的第一个领域模型（例如 Product Architect）</span></label><label class="check"><input type="checkbox" data-task="00-3"><span>建立 experiments/EXP-001-first-model 目录</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>把 RAG 当成训练：RAG 不更新权重</li><li>把“调用 API”当成拥有模型：你只是使用服务</li><li>一上来追 70B：零基础阶段只会放大成本和排错难度</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>一张属于你的学习地图 + 第一个实验目录。</p></section><nav class="pager"><a href="index.html">← 上一课</a><a href="m01.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

@@ -1,0 +1,27 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>从零训练 Mini GPT：把黑盒彻底拆开 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 13 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>从零训练 Mini GPT：把黑盒彻底拆开</h1><p class="lead">亲手实现字符/token embedding、causal self-attention、block、loss、训练循环和生成。</p><section class="lesson"><h2>13.1 为什么还要从零写一次</h2><p>你不可能用个人设备训练出前沿模型，但自己写一个 10M–50M 参数 Mini GPT 会让所有抽象概念落地。你会第一次看到 vocab_size、block_size、embedding_dim、num_heads、num_layers 如何真正组成参数量。</p></section><section class="lesson"><h2>13.2 数据与 Tokenizer</h2><p>最简单可以从字符级 tokenizer 开始：给每个字符一个整数 ID。它效率很低，但最适合教学。随后再换成 BPE tokenizer，你就能理解为什么真正模型不会简单地“一字一个 token”。</p></section><section class="lesson"><h2>13.3 训练样本</h2><p>从一段 token 序列中截取 block_size 长度的 x，再把目标 y 向右移动一位。模型在每一个位置同时预测下一个 token。一个 batch 就是很多这样的片段。</p></section><section class="lesson"><h2>13.4 Self-Attention 实现</h2><p>实现 qkv 线性投影，计算 q@k.transpose，应用 causal mask，softmax，再乘 v。你会亲眼看到 attention matrix 的形状通常包含 batch、head、sequence、sequence。</p></section><section class="lesson"><h2>13.5 训练与生成</h2><p>训练阶段 forward 返回 logits 和 cross entropy loss；生成阶段把当前上下文喂给模型，取最后一个位置 logits，采样新 token，拼接回上下文，循环。所谓“一个字一个字冒出来”就是这样发生的。</p></section><section class="lesson"><h2>13.6 你应该观察什么</h2><p>记录训练 loss、验证 loss、每隔固定 step 的样本文本。如果训练 loss 降而验证 loss 升，说明过拟合；如果输出长期完全随机，检查数据、target shift、mask、学习率和模型容量。</p></section><section class="lesson"><h2>本课最小代码 / 结构</h2><pre class="code"><code># 最关键的训练目标
+# x:  [t0, t1, t2, t3]
+# y:  [t1, t2, t3, t4]
+logits, loss = model(x, y)
+optimizer.zero_grad()
+loss.backward()
+optimizer.step()</code></pre></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="13-0"><span>准备一个纯文本语料</span></label><label class="check"><input type="checkbox" data-task="13-1"><span>实现最简单 tokenizer</span></label><label class="check"><input type="checkbox" data-task="13-2"><span>实现 get_batch</span></label><label class="check"><input type="checkbox" data-task="13-3"><span>实现 Head/MultiHeadAttention</span></label><label class="check"><input type="checkbox" data-task="13-4"><span>实现 TransformerBlock</span></label><label class="check"><input type="checkbox" data-task="13-5"><span>跑通 1000+ step 训练</span></label><label class="check"><input type="checkbox" data-task="13-6"><span>每隔一段保存 sample.txt</span></label><label class="check"><input type="checkbox" data-task="13-7"><span>保存 checkpoint 并重新加载生成</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>把完整网络代码复制运行却逐行不懂</li><li>target 没右移</li><li>忘 causal mask</li><li>只保存模型不保存 tokenizer 映射</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>EXP-008-mini-gpt：一个真正从随机权重训练出来、能生成文本的小 GPT。</p></section><nav class="pager"><a href="m12.html">← 上一课</a><a href="m14.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

@@ -1,0 +1,18 @@
+name = "personal-ai-lab-course"
+compatibility_date = "2024-09-01"
+pages_build_output_dir = "."
+
+# D1 数据库绑定
+[[d1_databases]]
+binding = "DB"
+database_name = "pail-course-db"
+database_id = "211d57d2-89bd-43c4-b378-8a3e9d0a2b41"
+
+# Email Service 绑定（发送 OTP 邮件）
+# 需要先在 Cloudflare Email Service 启用域名后配置
+# [[send_email]]
+# name = "EMAIL"
+
+[vars]
+SESSION_SECRET = "pail-course-secret-2026"
+DEV_MODE = "1"

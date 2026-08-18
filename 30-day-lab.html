@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>30 天实验路线 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap" style="padding-top:50px"><div class="eyebrow">30 DAY LAB</div><h1 style="font-size:54px">30 天实验路线</h1><p class="lead">每天不是“看完一章”，而是必须留下一个可验证产物。卡住时允许跨两天，但不允许用“看懂了”代替实验。</p><table class="table"><thead><tr><th>天</th><th>任务</th><th>当天验收</th></tr></thead><tbody><tr><td>Day 1</td><td>建立实验室目录，学终端与 Python 最小集</td><td>能运行 Python、创建 venv、读 JSONL</td></tr><tr><td>Day 2</td><td>大模型第一性原理</td><td>手画 Token→Transformer→Logits</td></tr><tr><td>Day 3</td><td>第一次运行小模型</td><td>固定 prompt 得到可复现输出</td></tr><tr><td>Day 4</td><td>理解模型文件与 chat template</td><td>能说明 config/tokenizer/weights</td></tr><tr><td>Day 5</td><td>设计领域目标行为 Rubric</td><td>完成 100 分评分表</td></tr><tr><td>Day 6</td><td>制作 20 条金标准样本</td><td>人工逐条检查</td></tr><tr><td>Day 7</td><td>扩成 dataset-v0.1</td><td>100+ 条并拆 train/val/test</td></tr><tr><td>Day 8</td><td>PyTorch Tensor / Linear</td><td>跑通 forward</td></tr><tr><td>Day 9</td><td>Loss / backward / optimizer</td><td>亲眼看到参数变化</td></tr><tr><td>Day 10</td><td>Attention 直觉和 QKV</td><td>画 tensor shape</td></tr><tr><td>Day 11</td><td>Transformer block</td><td>能阅读最小实现</td></tr><tr><td>Day 12</td><td>训练前 Benchmark</td><td>冻结 30 条 test</td></tr><tr><td>Day 13</td><td>QLoRA 环境 smoke test</td><td>20 step 不报错</td></tr><tr><td>Day 14</td><td>第一次 QLoRA</td><td>保存 adapter</td></tr><tr><td>Day 15</td><td>加载 adapter</td><td>同 prompt 对比 base/tuned</td></tr><tr><td>Day 16</td><td>做 30 条 Eval</td><td>得到第一份 score</td></tr><tr><td>Day 17</td><td>分析失败案例</td><td>至少分 4 类</td></tr><tr><td>Day 18</td><td>修 dataset-v0.2</td><td>只修明确错误</td></tr><tr><td>Day 19</td><td>第二轮 QLoRA</td><td>一次只改一个主要变量</td></tr><tr><td>Day 20</td><td>Pairwise 盲测</td><td>得到 win-rate</td></tr><tr><td>Day 21</td><td>设计 Deep Work File Manifest</td><td>拆 5 个文件 contract</td></tr><tr><td>Day 22</td><td>Writer→Reviewer→Rewrite</td><td>低于 85 自动返工</td></tr><tr><td>Day 23</td><td>Consistency Checker</td><td>找到跨文件冲突</td></tr><tr><td>Day 24</td><td>制作 preference 数据</td><td>20–50 chosen/rejected</td></tr><tr><td>Day 25</td><td>理解 DPO</td><td>完成 go/no-go 决策</td></tr><tr><td>Day 26</td><td>Continued Pretraining 决策</td><td>统计领域 token 与必要性</td></tr><tr><td>Day 27</td><td>Mini GPT tokenizer/get_batch</td><td>能产生 x/y</td></tr><tr><td>Day 28</td><td>Mini GPT attention/block</td><td>前向跑通</td></tr><tr><td>Day 29</td><td>Mini GPT 训练与生成</td><td>从随机权重生成文本</td></tr><tr><td>Day 30</td><td>建立四大 Registry 与下一阶段路线</td><td>形成 Personal AI Lab v1</td></tr></tbody></table><p><a class="btn" href="index.html">← 返回课程首页</a></p></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

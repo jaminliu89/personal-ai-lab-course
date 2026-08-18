@@ -1,0 +1,31 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evaluation：不用“感觉更聪明了”判断模型 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 09 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>Evaluation：不用“感觉更聪明了”判断模型</h1><p class="lead">建立固定 Benchmark、评分 Rubric、自动评测与人工抽检。</p><section class="lesson"><h2>9.1 先有评测再训练</h2><p>成熟流程不是“训练完再随便问几句”，而是训练之前就冻结测试集。你至少要有三个层次：能力测试、格式/约束测试、真实业务任务测试。这样模型改了以后才能知道到底改善了什么、伤害了什么。</p></section><section class="lesson"><h2>9.2 Point-based Rubric</h2><p>复杂任务适合把评分拆成明确项目。例如 PRD：需求理解 15、目标用户 10、闭环 15、架构 15、任务拆解 15、风险 10、验收标准 10、非模板化 10。每项都写清楚 0 分和满分标准，否则 LLM Judge 也会漂移。</p></section><section class="lesson"><h2>9.3 自动 Eval 与人工 Eval</h2><p>自动评测适合格式、关键词、单元测试、结构完整性和大规模初筛；LLM-as-a-Judge 适合主观质量但会有偏差；人工评测昂贵但最接近真实需求。正确方式是组合，而不是迷信某一种。</p></section><section class="lesson"><h2>9.4 Pairwise Comparison</h2><p>很多时候“给一个答案打 83 分”不稳定，但让评审比较 A 与 B 哪个更好容易得多。因此训练前后模型可以用 pairwise win-rate：同一个 prompt 输出 A/B，随机打乱顺序，让评审选择更优。</p></section><section class="lesson"><h2>9.5 回归测试</h2><p>模型针对一个领域微调后，可能损伤通用行为。每次新版本都跑同一套回归测试，包括安全、格式、中文表达、长回答、拒答边界等。只有目标指标上升且关键回归不恶化，才能升级版本。</p></section><section class="lesson"><h2>本课最小代码 / 结构</h2><pre class="code"><code>{
+  &quot;id&quot;:&quot;prd-001&quot;,
+  &quot;prompt&quot;:&quot;设计一个AI小说工作台&quot;,
+  &quot;rubric&quot;:{
+    &quot;closed_loop&quot;:20,
+    &quot;architecture&quot;:20,
+    &quot;execution&quot;:20,
+    &quot;risk&quot;:20,
+    &quot;depth&quot;:20
+  }
+}</code></pre></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="09-0"><span>建立 benchmark.jsonl 30–100 条</span></label><label class="check"><input type="checkbox" data-task="09-1"><span>为主任务写 100 分 Rubric</span></label><label class="check"><input type="checkbox" data-task="09-2"><span>写脚本保存 base/tuned 两份输出</span></label><label class="check"><input type="checkbox" data-task="09-3"><span>做至少 20 组盲测 pairwise</span></label><label class="check"><input type="checkbox" data-task="09-4"><span>输出 eval-report.md</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>测试集每次都换，结果无法比较</li><li>只测试训练目标，不测回归</li><li>让同一个模型既回答又给自己打分且无约束</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>一个版本化 Benchmark + 第一份模型评测报告。</p></section><nav class="pager"><a href="m08.html">← 上一课</a><a href="m10.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

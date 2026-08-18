@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>大模型第一性原理：Token 到下一个词 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 03 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>大模型第一性原理：Token 到下一个词</h1><p class="lead">看懂模型到底在做什么，理解“训练”为什么能改变行为。</p><section class="lesson"><h2>3.1 Tokenizer</h2><p>模型不直接看汉字和单词，而是先把文本切成 token ID。不同模型的 tokenizer 不一样，同一句中文在不同模型上可能变成不同数量的 token。上下文窗口、训练成本和生成速度最终都和 token 数有关。因此以后评估数据量不要只说“1000 篇文章”，而要估算 token 数。</p></section><section class="lesson"><h2>3.2 Embedding</h2><p>token ID 本身只是编号。Embedding 把编号映射到一个高维向量。训练时，这些向量会逐渐形成可用于预测的结构。你可以把它理解为模型内部“表示一个 token 的坐标”，但不要把它神化成固定的人类语义地图。</p></section><section class="lesson"><h2>3.3 Transformer</h2><p>Transformer 由一系列 block 堆叠而成，每个 block 主要包括 Attention、MLP、残差连接和归一化。Attention 让当前位置参考上下文中的其他位置；MLP 对每个位置做非线性变换。层层叠加以后，模型能够形成越来越复杂的模式。</p></section><section class="lesson"><h2>3.4 Next-token prediction</h2><p>典型自回归语言模型的核心训练目标很朴素：给前面的 token，预测下一个 token。比如“北京是中国的___”，模型输出整个词表的概率分布。真实答案对应的概率太低，就产生较高 loss；优化器利用梯度调整权重，让下次真实 token 概率更高。海量数据上重复这个过程，就形成语言能力。</p></section><section class="lesson"><h2>3.5 Temperature 不是“智商”</h2><p>生成阶段常见 temperature、top_p、top_k 都只是采样策略。temperature 较低通常更稳定，较高更随机。它不会给模型增加知识，也不会把一个不会推理的模型变会推理。</p></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="03-0"><span>找一个 tokenizer playground，观察中文句子的 token 数</span></label><label class="check"><input type="checkbox" data-task="03-1"><span>用同一句 prompt 分别设置低温和高温，比较输出</span></label><label class="check"><input type="checkbox" data-task="03-2"><span>画出：文本→token→embedding→transformer→logits→token 的流程</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>把 token 当成字符</li><li>把上下文窗口当成长期记忆</li><li>用调 temperature 解决知识和推理缺陷</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>你能不用术语堆砌，向另一个零基础的人解释“大模型为什么能生成文字”。</p></section><nav class="pager"><a href="m02.html">← 上一课</a><a href="m04.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

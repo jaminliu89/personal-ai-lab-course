@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Transformer 与 Attention：从“会用”到“看懂模型结构” · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 07 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>Transformer 与 Attention：从“会用”到“看懂模型结构”</h1><p class="lead">理解 Q/K/V、causal mask、multi-head、MLP 和残差，不要求手推论文但能读实现。</p><section class="lesson"><h2>7.1 Attention 的直觉</h2><p>一句话中当前位置生成下一个 token 时，需要决定“前面哪些 token 更值得关注”。Attention 通过 Query、Key 的相似度形成权重，再对 Value 加权汇总。你可以把它理解为动态检索，但它不是数据库查找，而是连续向量计算。</p></section><section class="lesson"><h2>7.2 Q / K / V</h2><p>同一份隐藏状态分别经过三个线性映射得到 Q、K、V。Q 表示当前位置要找什么，K 表示各位置提供什么匹配信号，V 是真正被汇总的信息。QK^T 得到分数，除以 sqrt(d) 稳定数值，再 softmax 得到权重。</p></section><section class="lesson"><h2>7.3 Causal Mask</h2><p>自回归模型训练时，一整个序列可以并行计算，但第 t 个位置不能偷看未来 token。因此要把未来位置 mask 掉。没有 causal mask，模型训练时会看到答案，推理时却看不到，任务就被破坏。</p></section><section class="lesson"><h2>7.4 Multi-head</h2><p>一个 attention head 只能在一个子空间里形成模式。多头把维度切分，让不同 head 并行学习不同关系，再拼接。不要执着于“某个 head 一定代表语法”，真实模型里的功能往往是分布式的。</p></section><section class="lesson"><h2>7.5 MLP、Residual、Norm</h2><p>Attention 之后通常还有 MLP，用来做逐位置的非线性特征变换；Residual 让输入绕过子层直接相加，帮助深层网络训练；Norm 控制数值尺度。一个 Transformer block 就是这些组件的组合。</p></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="07-0"><span>手画单头 attention 数据流</span></label><label class="check"><input type="checkbox" data-task="07-1"><span>用 4 个 token 的假矩阵理解 causal mask</span></label><label class="check"><input type="checkbox" data-task="07-2"><span>阅读一个最小 GPT block 的 PyTorch 实现</span></label><label class="check"><input type="checkbox" data-task="07-3"><span>能解释 hidden_size、num_heads、num_layers 三个配置</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>把 Attention 等同于长期记忆</li><li>认为模型“查找事实”一定是某个 attention head 完成</li><li>只背 QKV 公式却不知道 tensor shape</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>一张 Transformer Block 手绘图 + 你自己的中文解释。</p></section><nav class="pager"><a href="m06.html">← 上一课</a><a href="m08.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

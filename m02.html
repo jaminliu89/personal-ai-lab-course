@@ -1,0 +1,30 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>终端、Git 与实验目录：让每次训练都可复现 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 02 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>终端、Git 与实验目录：让每次训练都可复现</h1><p class="lead">建立工程纪律：代码、数据、配置、结果、失败记录不能混在一起。</p><section class="lesson"><h2>2.1 你必须会的终端命令</h2><p>pwd 看当前目录，ls 看文件，cd 切换目录，mkdir 创建目录，cp 复制，mv 移动，rm 删除。你不需要成为 Linux 管理员，但训练模型大量工作发生在终端里；真正的 GPU 服务器通常也没有你熟悉的图形界面。</p></section><section class="lesson"><h2>2.2 为什么 Git 很重要</h2><p>模型实验不是“改完就完了”。你可能今天改 prompt，明天改清洗规则，后天换数据集。没有版本记录，你无法知道性能变化来自哪里。Git 至少要学会 init、status、add、commit、log、diff。大模型权重本身通常不直接塞进 Git，而是记录下载地址、哈希、配置和脚本。</p></section><section class="lesson"><h2>2.3 一个规范实验目录</h2><p>推荐每个实验都至少有 README.md、config.yaml、train.py、eval.py、data/、outputs/、logs/。README 记录目标和结论；config 保存超参数；outputs 放 adapter 或 checkpoint；logs 放 loss 和 eval 结果。以后每次训练都复制模板，而不是临时乱建文件。</p></section><section class="lesson"><h2>2.4 Experiment ID</h2><p>给每个实验唯一编号，例如 EXP-003-qwen3b-qlora-v2。编号应写进日志和评测结果。实验失败也不能删除，因为失败就是资产：它告诉你哪些参数、数据或环境组合不值得再试。</p></section><section class="lesson"><h2>本课最小代码 / 结构</h2><pre class="code"><code>personal-ai-lab/
+  experiments/
+    EXP-001-first-model/
+      README.md
+      config.yaml
+      train.py
+      eval.py
+      data/
+      outputs/
+      logs/</code></pre></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="02-0"><span>创建 experiments/EXP-001</span></label><label class="check"><input type="checkbox" data-task="02-1"><span>git init 并做第一次 commit</span></label><label class="check"><input type="checkbox" data-task="02-2"><span>建立 README/config/data/outputs/logs 结构</span></label><label class="check"><input type="checkbox" data-task="02-3"><span>在 README 写：假设、变量、指标、结果、结论</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>把模型权重误传 GitHub</li><li>每次实验覆盖同一个 output 文件夹</li><li>同时修改五个超参数，最后不知道哪个变量起作用</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>一个标准化实验模板，以后所有训练都复制它。</p></section><nav class="pager"><a href="m01.html">← 上一课</a><a href="m03.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

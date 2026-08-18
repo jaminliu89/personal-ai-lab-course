@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GPU、显存、量化与云训练：知道钱花在哪 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 14 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>GPU、显存、量化与云训练：知道钱花在哪</h1><p class="lead">能够估算训练资源、选择设备、读 OOM，并建立成本纪律。</p><section class="lesson"><h2>14.1 参数为什么占显存</h2><p>以 FP16/BF16 粗略估算，一个参数权重约 2 bytes。7B 权重本身约 14GB，但训练远不止权重：还要梯度、优化器状态、激活值等，所以全参数训练显存会远大于 14GB。LoRA、量化、gradient checkpointing 都是在不同位置省内存。</p></section><section class="lesson"><h2>14.2 OOM 怎么排</h2><p>Out Of Memory 不要第一反应换最贵 GPU。按顺序检查：batch size、sequence length、gradient accumulation、precision、是否启用 gradient checkpointing、量化方式、模型大小。sequence length 翻倍对 attention 内存/计算的影响可能非常明显。</p></section><section class="lesson"><h2>14.3 CUDA</h2><p>主流训练生态大量依赖 NVIDIA CUDA。你不需要会写 CUDA kernel，但要理解驱动、CUDA runtime、PyTorch CUDA build、GPU 型号之间存在兼容关系。环境问题最好锁版本，不要随意“全部升级到最新”。</p></section><section class="lesson"><h2>14.4 云 GPU 成本纪律</h2><p>每次开云机器前准备好代码和小样本，在本地先完成静态检查；开机后先跑 20–100 step smoke test；确认日志和 checkpoint 正常再跑长训练；结束立即停止实例。每个实验记录 GPU 型号、小时数和成本。</p></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="14-0"><span>用参数量估算 BF16 权重大小</span></label><label class="check"><input type="checkbox" data-task="14-1"><span>模拟一次 batch/seq 长度对显存的取舍</span></label><label class="check"><input type="checkbox" data-task="14-2"><span>写 cloud-run-checklist.md</span></label><label class="check"><input type="checkbox" data-task="14-3"><span>在实验 README 增加 cost 字段</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>云 GPU 开着调代码几小时</li><li>OOM 后只会换机器</li><li>不记录训练时长和成本</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>一份你自己的 GPU 选择与成本表。</p></section><nav class="pager"><a href="m13.html">← 上一课</a><a href="m15.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

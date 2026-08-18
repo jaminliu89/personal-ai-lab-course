@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Personal AI Lab OS：把学习升级成自己的模型公司 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 16 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>Personal AI Lab OS：把学习升级成自己的模型公司</h1><p class="lead">把数据、训练、评测、部署、Agent、文档串成长期可进化系统。</p><section class="lesson"><h2>16.1 四个 Registry</h2><p>至少建立 Model Registry、Dataset Registry、Benchmark Registry、Experiment Registry。每个模型能追溯它用了哪个 base、哪个数据版本、哪个训练配置、在哪个 benchmark 得多少分。否则半年后你只剩一堆叫 final-v2-really-final 的文件。</p></section><section class="lesson"><h2>16.2 数据飞轮</h2><p>真实使用中的失败案例进入 Failure Inbox；定期分类：知识缺失、行为偏差、工具失败、上下文构造失败。只有确定需要改变模型行为的案例才进入训练候选；其他问题可能应该修 RAG 或 Agent。这样训练数据来自真实错误，而不是凭空合成。</p></section><section class="lesson"><h2>16.3 Champion / Challenger</h2><p>线上始终有一个 Champion 稳定版本，新模型作为 Challenger。Challenger 只有在目标 benchmark 超过 Champion、关键回归不过度下降、成本可接受时才能晋级。这样你会自然形成模型公司式迭代。</p></section><section class="lesson"><h2>16.4 你的最终技术栈</h2><p>底层是开源模型与训练框架；中间层是 Dataset/Eval/Registry；上层是 Agent Workflow 和业务应用。你不需要自己发明所有组件，但关键资产——数据、评测、决策记录、实验结果——必须由你掌控。</p></section><section class="lesson"><h2>16.5 从普通人到真正模型工程实践者</h2><p>你是否“会训练大模型”不由是否背过 Transformer 公式决定，而由你能否独立完成：提出可验证假设 → 制作数据 → 跑训练 → 发现失败 → 用 Eval 解释 → 修正 → 部署 → 收集新失败。完成这个闭环 10 次，你的能力会远高于只看课程 100 小时。</p></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="16-0"><span>建立四个 Registry</span></label><label class="check"><input type="checkbox" data-task="16-1"><span>把前面所有实验登记进去</span></label><label class="check"><input type="checkbox" data-task="16-2"><span>建立 failures/ 目录</span></label><label class="check"><input type="checkbox" data-task="16-3"><span>定义 Champion 晋级规则</span></label><label class="check"><input type="checkbox" data-task="16-4"><span>为下一季度列 3 个模型实验，不超过 3 个</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>每次兴奋就换基础模型</li><li>只有训练没有 eval</li><li>只有模型没有真实业务反馈</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>你的 Personal AI Lab v1：一个可持续迭代的个人模型研发系统。</p></section><nav class="pager"><a href="m15.html">← 上一课</a><a href="30-day-lab.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

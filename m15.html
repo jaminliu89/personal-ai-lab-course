@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Model Serving：把模型变成你自己的 API · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 15 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>Model Serving：把模型变成你自己的 API</h1><p class="lead">从“在 Notebook 能跑”升级到“其他应用可以稳定调用”。</p><section class="lesson"><h2>15.1 Serving 与训练分离</h2><p>训练脚本关注反向传播，Serving 关注吞吐、延迟、并发、显存和接口稳定。上线时模型通常处于 inference mode，不需要保存梯度。不要把训练 Notebook 直接当生产 API。</p></section><section class="lesson"><h2>15.2 OpenAI-compatible API</h2><p>很多推理框架支持类似 /v1/chat/completions 的接口，这样你的上层应用可以在不同模型之间切换，而不用每次重写客户端。关键是把 model_id、temperature、max_tokens、stream 等参数规范化。</p></section><section class="lesson"><h2>15.3 量化与吞吐</h2><p>部署时量化可以降低显存和成本，但可能影响质量；batching 能提高吞吐；KV cache 影响长对话性能。你不需要第一天做极致优化，先记录 P50/P95 延迟、tokens/s、最大并发和错误率。</p></section><section class="lesson"><h2>15.4 模型版本</h2><p>API 不要只叫 /model。至少有明确版本，例如 product-architect-v0.3。线上每次升级先跑 benchmark，再灰度，保留回滚能力。模型、adapter、tokenizer、prompt template 都属于版本的一部分。</p></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="15-0"><span>本地启动一次模型 API</span></label><label class="check"><input type="checkbox" data-task="15-1"><span>用 curl 或 Python 请求</span></label><label class="check"><input type="checkbox" data-task="15-2"><span>记录首 token 延迟和生成速度</span></label><label class="check"><input type="checkbox" data-task="15-3"><span>为 API 增加 /health</span></label><label class="check"><input type="checkbox" data-task="15-4"><span>做 model-version.txt</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>训练模型覆盖线上模型无法回滚</li><li>不保存 tokenizer/chat template 版本</li><li>只有“能返回”没有性能指标</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>一个本地可调用的模型服务 + 最小 API 文档。</p></section><nav class="pager"><a href="m14.html">← 上一课</a><a href="m16.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

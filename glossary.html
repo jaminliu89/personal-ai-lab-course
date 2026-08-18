@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>术语表 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap" style="padding-top:50px"><div class="eyebrow">GLOSSARY</div><h1 style="font-size:54px">零基础术语表</h1><div class="grid glossary"><div class="card"><h3>Base Model</h3><p>主要完成预训练、尚未或较少做指令对齐的基础模型。</p></div><div class="card"><h3>Instruct Model</h3><p>经过指令微调/对齐，更适合对话和遵循要求。</p></div><div class="card"><h3>Token</h3><p>Tokenizer 处理文本后的基本离散单位。</p></div><div class="card"><h3>Context Window</h3><p>单次推理可处理的 token 上限范围。</p></div><div class="card"><h3>Parameter</h3><p>模型训练中被学习的数值权重。</p></div><div class="card"><h3>Inference</h3><p>只进行前向计算，使用模型生成结果。</p></div><div class="card"><h3>Training</h3><p>计算 loss、梯度并更新参数。</p></div><div class="card"><h3>SFT</h3><p>Supervised Fine-Tuning，有监督指令微调。</p></div><div class="card"><h3>LoRA</h3><p>冻结大部分基础权重，只训练低秩适配参数。</p></div><div class="card"><h3>QLoRA</h3><p>量化基础模型 + LoRA 的低显存微调方式。</p></div><div class="card"><h3>Gradient</h3><p>Loss 对参数的导数/变化方向信息。</p></div><div class="card"><h3>Learning Rate</h3><p>优化器每一步更新幅度的重要超参数。</p></div><div class="card"><h3>Epoch</h3><p>完整遍历一遍训练集。</p></div><div class="card"><h3>Batch</h3><p>一次训练 step 同时处理的一组样本。</p></div><div class="card"><h3>Checkpoint</h3><p>训练过程中保存的模型/优化器等状态。</p></div><div class="card"><h3>Eval</h3><p>用固定数据和指标评估模型。</p></div><div class="card"><h3>DPO</h3><p>利用偏好对直接进行偏好优化的一类方法。</p></div><div class="card"><h3>RAG</h3><p>检索外部资料加入上下文，不直接修改模型权重。</p></div><div class="card"><h3>Agent</h3><p>让模型结合状态、工具与循环执行多步骤任务的系统。</p></div><div class="card"><h3>Quantization</h3><p>用更低精度表示权重/激活等以节省资源。</p></div></div><p><a class="btn" href="index.html">← 返回首页</a></p></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

@@ -1,0 +1,24 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DPO 与偏好数据：把“我喜欢这种答案”变成训练信号 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 11 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>DPO 与偏好数据：把“我喜欢这种答案”变成训练信号</h1><p class="lead">学习 chosen/rejected 数据、偏好标准和 DPO 的适用边界。</p><section class="lesson"><h2>11.1 SFT 和偏好训练解决不同问题</h2><p>SFT 教模型“面对这种输入，大概应该输出什么”；偏好训练进一步告诉模型“两个都能回答的版本里，我更偏好哪个”。如果模型连基本任务都不会，先 SFT；如果它会做但风格、深度、拒答策略或推理呈现不符合预期，偏好数据更有价值。</p></section><section class="lesson"><h2>11.2 chosen / rejected</h2><p>一条偏好样本通常包含同一个 prompt 和两个回答：chosen 是更喜欢的，rejected 是更差的。差异应该和你的目标行为有关，例如 chosen 有完整决策依据、rejected 只有模板话，而不是随机找一个特别糟答案。</p></section><section class="lesson"><h2>11.3 偏好 Rubric</h2><p>偏好必须稳定。你可以定义：不允许空泛开场、优先给具体判断、遇到复杂任务必须拆验收、不能用大量占位文件冒充完成。每条 chosen/rejected 都记录为什么选。这样数据以后还能审计。</p></section><section class="lesson"><h2>11.4 DPO 的直觉</h2><p>DPO 不需要像经典 RLHF 那样单独训练 reward model 再跑复杂 RL 环节。它直接利用偏好对，让模型提高 chosen 相对于 rejected 的偏好概率，同时参考 reference model 限制漂移。你先理解目标即可，不必第一天推导公式。</p></section><section class="lesson"><h2>11.5 数据陷阱</h2><p>如果 chosen 永远特别长、rejected 永远特别短，模型可能学到“长就是好”；如果偏好标注前后矛盾，训练信号会互相抵消。因此偏好对要尽量控制无关变量。</p></section><section class="lesson"><h2>本课最小代码 / 结构</h2><pre class="code"><code>{&quot;prompt&quot;:&quot;为复杂项目写PRD&quot;,
+ &quot;chosen&quot;:&quot;先定义边界、决策和验收……&quot;,
+ &quot;rejected&quot;:&quot;当然可以，下面是一个简单PRD模板……&quot;,
+ &quot;reason&quot;:&quot;chosen有决策依据与验收；rejected为空泛模板&quot;}</code></pre></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="11-0"><span>从你真实历史输出中找 20 组“满意/不满意”回答</span></label><label class="check"><input type="checkbox" data-task="11-1"><span>为每组写 preference_reason</span></label><label class="check"><input type="checkbox" data-task="11-2"><span>把偏好标准整理为一页 rubric</span></label><label class="check"><input type="checkbox" data-task="11-3"><span>构造 chosen/rejected JSONL</span></label><label class="check"><input type="checkbox" data-task="11-4"><span>先不训练，人工复核是否真的体现同一标准</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>chosen 和 rejected 的差异只是长度</li><li>偏好标准今天一个明天一个</li><li>用错误事实当 rejected 主要差异，最后只学会事实而非风格</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>preference-v0.1：至少 50 组有明确理由的偏好对。</p></section><nav class="pager"><a href="m10.html">← 上一课</a><a href="m12.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

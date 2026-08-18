@@ -1,0 +1,30 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第一次运行开源模型：把“网站里的 AI”变成你电脑里的模型 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 04 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>第一次运行开源模型：把“网站里的 AI”变成你电脑里的模型</h1><p class="lead">完成本地/云端推理，理解模型文件、Tokenizer、显存和生成参数。</p><section class="lesson"><h2>4.1 Base / Instruct</h2><p>Base Model 更接近预训练后的“续写机器”，Instruct Model 经过指令微调和对齐，更适合聊天。零基础第一次运行优先 Instruct。以后做自己的领域模型，可以从 Instruct 做 SFT，也可以在更高级阶段从 Base 做领域继续预训练。</p></section><section class="lesson"><h2>4.2 模型文件</h2><p>常见仓库中你会看到 config.json、tokenizer.json、*.safetensors、generation_config.json 等。safetensors 主要承载权重；config 描述结构；tokenizer 决定文本如何变 token。模型不是一个神秘 exe，而是一组配置、权重和运行代码。</p></section><section class="lesson"><h2>4.3 最小推理流程</h2><p>使用 Transformers 时，基本流程是 AutoTokenizer.from_pretrained → AutoModelForCausalLM.from_pretrained → apply_chat_template → model.generate。第一次只追求“跑通”，不要急着量化、并行、改 attention backend。</p></section><section class="lesson"><h2>4.4 Mac 与云 GPU</h2><p>Apple Silicon 可以做小模型推理和部分训练实验，但生态和 CUDA 不完全相同。为了学习标准训练链路，后面最好至少体验一次 NVIDIA CUDA 云 GPU。你的 Mac 适合写代码、清数据、跑小样本、管理实验；云 GPU 负责重训练。</p></section><section class="lesson"><h2>本课最小代码 / 结构</h2><pre class="code"><code>from transformers import AutoTokenizer, AutoModelForCausalLM
+
+model_id = &quot;YOUR_MODEL&quot;
+tok = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(model_id, device_map=&quot;auto&quot;)
+messages = [{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;用一句话解释什么是微调&quot;}]
+text = tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+inputs = tok(text, return_tensors=&quot;pt&quot;).to(model.device)
+out = model.generate(**inputs, max_new_tokens=128, temperature=0.7)
+print(tok.decode(out[0], skip_special_tokens=True))</code></pre></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="04-0"><span>选择一个 0.5B–3B 的 Instruct 模型</span></label><label class="check"><input type="checkbox" data-task="04-1"><span>成功生成第一段中文回答</span></label><label class="check"><input type="checkbox" data-task="04-2"><span>记录模型名、参数量、dtype、设备、生成速度</span></label><label class="check"><input type="checkbox" data-task="04-3"><span>用固定 prompt 改 temperature 对比</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>第一次就下载过大模型把磁盘/内存打满</li><li>忽略模型 license</li><li>模型加载失败就盲目升级所有包</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>EXP-002-first-inference：一份能够复现的本地或 Colab 推理记录。</p></section><nav class="pager"><a href="m03.html">← 上一课</a><a href="m05.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

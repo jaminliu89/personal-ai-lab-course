@@ -1,0 +1,25 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dataset Engineering：模型不是被“提示词”训练出来的，是被数据塑造的 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 05 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>Dataset Engineering：模型不是被“提示词”训练出来的，是被数据塑造的</h1><p class="lead">学会设计、采集、清洗、去重、分层和版本化 SFT 数据。</p><section class="lesson"><h2>5.1 数据先于训练</h2><p>很多微调失败不是参数问题，而是数据没有明确教模型一种稳定行为。例如你想让模型写深度 PRD，却给它混入大量空泛问答、营销文案和短回答，模型学到的信号就会互相冲突。第一步不是“多收集”，而是定义目标行为。</p></section><section class="lesson"><h2>5.2 定义行为 Rubric</h2><p>在造数据之前写评分标准：结构完整 20 分、第一性分析 20 分、可执行性 20 分、风险与边界 20 分、跨文件一致性 20 分。以后每条训练样本都尽量接近高分答案。没有 Rubric，数据团队无法判断什么叫“高质量”。</p></section><section class="lesson"><h2>5.3 SFT 格式</h2><p>现代指令模型常用 messages 格式：system、user、assistant。训练时会套用模型自己的 chat template。不要把不同模型的特殊 token 手工混用。数据文件推荐 JSONL，一行一条，便于流式读取和定位坏样本。</p></section><section class="lesson"><h2>5.4 清洗与去重</h2><p>至少检查空字段、乱码、极短答案、重复样本、模板污染、错误事实、泄露系统提示词。重复数据会让模型过度记忆某些格式。对于领域数据，质量通常比盲目堆数量更重要。</p></section><section class="lesson"><h2>5.5 Train / Validation / Test</h2><p>训练集用于更新权重；验证集用于训练过程中的选择和早停；测试集最后一次才拿出来判断泛化。最重要的是测试问题不能和训练样本高度重复，否则你测到的是记忆，不是能力。</p></section><section class="lesson"><h2>5.6 数据版本</h2><p>每次改变清洗规则或增删样本都生成新版本，例如 dataset-v0.1、v0.2。训练结果必须绑定 data_version。未来你会发现数据版本管理比改模型名字更重要。</p></section><section class="lesson"><h2>本课最小代码 / 结构</h2><pre class="code"><code>{&quot;messages&quot;:[
+  {&quot;role&quot;:&quot;system&quot;,&quot;content&quot;:&quot;你是一名产品架构师&quot;},
+  {&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;设计一个AI写作工作台&quot;},
+  {&quot;role&quot;:&quot;assistant&quot;,&quot;content&quot;:&quot;先定义目标用户与核心闭环……&quot;}
+]}</code></pre></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="05-0"><span>写一份目标行为评分 Rubric</span></label><label class="check"><input type="checkbox" data-task="05-1"><span>人工制作 20 条金标准样本</span></label><label class="check"><input type="checkbox" data-task="05-2"><span>写脚本检查空字段和重复</span></label><label class="check"><input type="checkbox" data-task="05-3"><span>拆分 train/val/test</span></label><label class="check"><input type="checkbox" data-task="05-4"><span>随机抽 20 条人工检查，记录坏样本原因</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>把 AI 自动生成的 1 万条未经人工检查内容直接训练</li><li>测试集来自训练集改写</li><li>训练数据里答案长度远低于实际使用需求</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>EXP-003-dataset-v0.1：至少 100 条经过抽检和版本化的数据。</p></section><nav class="pager"><a href="m04.html">← 上一课</a><a href="m06.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

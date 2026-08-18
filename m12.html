@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Continued Pretraining：让模型真正吸收领域语言分布 · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 12 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>Continued Pretraining：让模型真正吸收领域语言分布</h1><p class="lead">理解何时该继续预训练、数据规模、灾难性遗忘和与 SFT 的顺序。</p><section class="lesson"><h2>12.1 它和 SFT 不一样</h2><p>SFT 的数据通常是“指令 → 理想回答”；Continued Pretraining 更接近原始语言模型训练，用大量领域文本继续 next-token prediction。目标是让模型适应专业术语、文体和知识分布。比如法律、医学、代码、某个大型企业知识域，都可能受益。</p></section><section class="lesson"><h2>12.2 什么时候值得做</h2><p>如果你的问题只是“回答要更符合一种格式”，优先 SFT；如果模型对领域语言本身理解明显不足，且你拥有大量高质量原始语料，才考虑 Continued Pretraining。它比 LoRA SFT 更重，也更容易损伤通用能力。</p></section><section class="lesson"><h2>12.3 数据准备</h2><p>领域语料要做去重、质量过滤、版权与隐私审查、语言识别、长度处理。预训练数据规模通常用 token 计量。你应先做数据统计报告：文档数、token 数、来源、重复率、语言比例、敏感数据风险。</p></section><section class="lesson"><h2>12.4 灾难性遗忘</h2><p>只用狭窄领域数据继续训练可能让模型过度偏向领域，通用能力下降。常见缓解思路包括混入一定比例通用数据、降低学习率、控制训练步数，并且对通用 benchmark 做回归评测。</p></section><section class="lesson"><h2>12.5 顺序</h2><p>常见路线是 Base → Continued Pretraining → SFT → Preference Alignment。不是所有项目都必须四步全做。对于个人，第一个真正产品通常只需要好的 Base + SFT/LoRA + Eval。把 Continued Pretraining 放到你有明确证据证明“基础领域能力不够”时再做。</p></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="12-0"><span>统计你拥有的领域原始语料量</span></label><label class="check"><input type="checkbox" data-task="12-1"><span>用 tokenizer 估算 token 数</span></label><label class="check"><input type="checkbox" data-task="12-2"><span>生成数据质量报告</span></label><label class="check"><input type="checkbox" data-task="12-3"><span>设计“领域能力 + 通用回归”双 benchmark</span></label><label class="check"><input type="checkbox" data-task="12-4"><span>写一份是否值得 continued pretraining 的 go/no-go 决策</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>因为“听起来高级”就做 CPT</li><li>把 SFT 问答混成原始语料却不知道训练目标</li><li>没有通用回归测试</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>一份 Continued Pretraining 决策报告，而不是盲目启动昂贵训练。</p></section><nav class="pager"><a href="m11.html">← 上一课</a><a href="m13.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>

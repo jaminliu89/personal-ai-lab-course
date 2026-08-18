@@ -1,0 +1,35 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PyTorch：第一次亲眼看见“权重被更新” · Personal AI Lab</title><link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Lab">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
+
+</head><body><header class="top"><div class="wrap topin"><a class="brand" href="index.html">PERSONAL AI LAB<small>从零开始，真正训练自己的模型</small></a><a class="btn" href="30-day-lab.html">30 天实验计划</a></div></header><main class="wrap layout"><aside class="side"></aside><article class="content"><div class="eyebrow">MODULE 06 · PROGRESS <span data-progress>0%</span></div><div class="progressbar"><i></i></div><h1>PyTorch：第一次亲眼看见“权重被更新”</h1><p class="lead">不追求数学推导，先用最小神经网络理解张量、前向、Loss、反向传播、优化器。</p><section class="lesson"><h2>6.1 Tensor</h2><p>Tensor 可以看成带有形状和数据类型的多维数组。模型权重、输入 token embedding、attention 矩阵最终都是 tensor。你最先要会看 shape、dtype、device。训练中大量 bug 本质上就是 shape 或 device 不一致。</p></section><section class="lesson"><h2>6.2 参数与前向传播</h2><p>神经网络里的 Linear 层有可训练 weight 和 bias。输入经过层得到预测，这叫 forward。此时只是“算答案”，参数还没有改变。</p></section><section class="lesson"><h2>6.3 Loss</h2><p>Loss 把预测和目标之间的错误压成一个可优化的数字。语言模型常用 cross entropy。Loss 下降通常说明模型在训练数据分布上学到了东西，但 Loss 下降不等于实际任务一定变好，因此后面必须配 Eval。</p></section><section class="lesson"><h2>6.4 backward()</h2><p>PyTorch 的 autograd 会记录运算图。loss.backward() 计算每个参数对 Loss 的梯度。optimizer.step() 根据梯度更新参数，optimizer.zero_grad() 清掉旧梯度。训练循环最核心就是这几步不断重复。</p></section><section class="lesson"><h2>6.5 学习率</h2><p>学习率决定每次更新步长。过大可能震荡甚至发散，过小可能几乎学不动。你以后看到训练 Loss 突然 NaN，学习率、数值精度、异常数据都值得检查。</p></section><section class="lesson"><h2>本课最小代码 / 结构</h2><pre class="code"><code>import torch
+
+x = torch.tensor([[1.],[2.],[3.],[4.]])
+y = 2*x + 1
+model = torch.nn.Linear(1,1)
+opt = torch.optim.SGD(model.parameters(), lr=0.05)
+
+for step in range(200):
+    pred = model(x)
+    loss = ((pred-y)**2).mean()
+    opt.zero_grad()
+    loss.backward()
+    opt.step()
+    if step % 20 == 0:
+        print(step, loss.item())</code></pre></section><section class="lab"><h2>动手实验：不做完不算学完</h2><label class="check"><input type="checkbox" data-task="06-0"><span>运行一个线性回归训练循环</span></label><label class="check"><input type="checkbox" data-task="06-1"><span>每 20 步打印 loss</span></label><label class="check"><input type="checkbox" data-task="06-2"><span>训练前后打印同一个 weight</span></label><label class="check"><input type="checkbox" data-task="06-3"><span>故意把学习率调很高观察现象</span></label></section><section class="errors"><h2>常见错误 / 排错提醒</h2><ul><li>只盯训练 Loss，不做任务 Eval</li><li>忘记 optimizer.zero_grad 导致梯度累积</li><li>CPU tensor 和 GPU tensor 混用</li></ul></section><section class="deliver"><h2>本课验收产物</h2><p>一个几十行的 PyTorch 小实验，证明参数确实在训练中被改变。</p></section><nav class="pager"><a href="m05.html">← 上一课</a><a href="m07.html">下一课 →</a></nav></article></main><footer class="footer"><div class="wrap">Personal AI Lab Course V2 · 所有任务进度只保存在当前浏览器 LocalStorage。</div></footer><script src="assets/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  });
+}
+</script>
+<script src="assets/auth.js"></script>
+
+</body></html>
